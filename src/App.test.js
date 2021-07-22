@@ -1,37 +1,22 @@
-import { generateGrid, addObstacleToGrid } from './App';
+import { generateGridWithObstacles } from './App';
 
 describe('App.js', ()=>{
-  describe('generateGrid()', ()=>{
+  describe('generateGridWithObstacles()', ()=>{
     describe('WHEN: Given (gridLength, gridWidth), ', ()=>{
+      const [ x, y ] = [ 5, 5 ];
+
       it('THEN: It produces a grid of that size', ()=>{
-        const [ gridLength, gridWidth ] = [ 3, 3 ];
-        const expectedResult = [
-          [ 0, 0, 0 ],
-          [ 0, 0, 0 ],
-          [ 0, 0, 0 ],
-        ];
+        const gridLength = generateGridWithObstacles(x, y).length;
+        const gridWidth = generateGridWithObstacles(x, y)[0].length;
 
-        const result = generateGrid(gridLength, gridWidth);
-
-        expect(result).toEqual(expectedResult);
+        expect(gridLength).toEqual(5);
+        expect(gridWidth).toEqual(5);
       });
-    });
-  });
+      it('AND: The grid contains an obstacle.', ()=>{
+        const grid = generateGridWithObstacles(x, y);
+        const flattenedGrid = grid.flat();
 
-  describe('generateObstacle()', ()=>{
-    describe('WHEN: Given a (grid) parameter, ', ()=>{
-      it('THEN: It randomly adds an obstacle (1) to the grid.', ()=>{
-        const grid = [
-          [ 0, 0, 0 ],
-          [ 0, 0, 0 ],
-          [ 0, 0, 0 ],
-        ];
-
-        const result = addObstacleToGrid(grid);
-        const flattenedResult = result.flat();
-        const resultHasAnObstacleInIt = flattenedResult.includes(1);
-
-        console.log(flattenedResult)
+        const resultHasAnObstacleInIt = flattenedGrid.includes(1);
 
         expect(resultHasAnObstacleInIt).toEqual(true);
       });

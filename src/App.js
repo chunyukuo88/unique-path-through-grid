@@ -1,8 +1,10 @@
-/**
- * m = length
- * n = width
- * */
-export const generateGrid = (gridLength, gridWidth) => {
+export const generateGridWithObstacles = (gridLength, gridWidth) => {
+  const grid = generateGrid(gridLength, gridWidth);
+  const gridWithObstacle = addObstacleToGrid(grid);
+  return gridWithObstacle;
+};
+
+const generateGrid = (gridLength, gridWidth) => {
   const result = [];
   for (let i = 0; i < gridLength; i++){
     generateInnerArrays(result, gridWidth);
@@ -18,12 +20,11 @@ const generateInnerArrays = (outerArray, outerArrayWidth) => {
   outerArray.push(innerArray);
 };
 
-export const addObstacleToGrid = (grid) => {
+const addObstacleToGrid = (grid) => {
   const x = produceCoordinate(grid);
   const y= produceCoordinate(grid);
-  console.log(`x = ${x}, y=${y}`)
   grid[x][y] = 1;
-  return grid
+  return grid;
 };
 
 const produceCoordinate = (grid) => Math.floor(Math.random() * grid.length);
