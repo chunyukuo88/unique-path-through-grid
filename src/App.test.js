@@ -1,4 +1,4 @@
-import { generateGrid, generateObstacle } from './App';
+import { generateGrid, addObstacleToGrid } from './App';
 
 describe('App.js', ()=>{
   describe('generateGrid()', ()=>{
@@ -19,7 +19,7 @@ describe('App.js', ()=>{
   });
 
   describe('generateObstacle()', ()=>{
-    describe('WHEN: Given (grid), ', ()=>{
+    describe('WHEN: Given a (grid) parameter, ', ()=>{
       it('THEN: It randomly adds an obstacle (1) to the grid.', ()=>{
         const grid = [
           [ 0, 0, 0 ],
@@ -27,9 +27,11 @@ describe('App.js', ()=>{
           [ 0, 0, 0 ],
         ];
 
-        const result = generateObstacle(grid);
+        const result = addObstacleToGrid(grid);
         const flattenedResult = result.flat();
         const resultHasAnObstacleInIt = flattenedResult.includes(1);
+
+        console.log(flattenedResult)
 
         expect(resultHasAnObstacleInIt).toEqual(true);
       });
