@@ -1,25 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+/**
+ * m = length
+ * n = width
+ * */
+const generateGrid = (gridLength, gridWidth) => {
+  const result = [];
+  for (let i = 0; i < gridLength; i++){
+    const innerArray = [];
+    for (let j = 0; j < gridWidth; j++){
+      innerArray.push(0);
+    }
+    result.push(innerArray);
+  }
+  console.log(result);
+  return result;
+};
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const generateObstacle = (grid) => {
+  const x =
+  grid[x][y]
+};
 
-export default App;
+export { generateGrid, generateObstacle };
