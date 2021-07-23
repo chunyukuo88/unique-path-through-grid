@@ -4,14 +4,14 @@ export const generateGridOfPaths = (rows, columns) => {
   const grid = generateGrid(rows, columns);
   for (let i = 0; i < rows; i++){
     for (let j = 0; j < columns; j++){
-      if (j > 0 && i > 0) {
+      if (isNotAlongLeftOrTopBorder(i, j)) {
         const theCellAbove = grid[i - 1][j];
         const cellToTheLeft = grid[i][j - 1];
         grid[i][j] = theCellAbove + cellToTheLeft;
-      } else if (j > 0 && i === 0) {
+      } else if (isAlongTheTopBorder(i, j)) {
         const cellToTheLeft = grid[i][j - 1];
         grid[i][j] = cellToTheLeft;
-      } else if (j === 0 && i > 0) {
+      } else if (isAlongTheLeftBorder(i, j)) {
         const theCellAbove = grid[i - 1][j];
         grid[i][j] = theCellAbove;
       } else {
@@ -19,8 +19,16 @@ export const generateGridOfPaths = (rows, columns) => {
       }
     }
   }
+  console.table(grid);
   return grid[rows - 1][columns - 1];
 };
+
+const isNotAlongLeftOrTopBorder = (i, j) => j > 0 && i > 0;
+
+const isAlongTheTopBorder = (i, j) => j > 0 && i === 0;
+
+const isAlongTheLeftBorder = (i, j) => j === 0 && i > 0;
+
 
 /**
  [
