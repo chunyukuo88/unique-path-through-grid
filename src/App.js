@@ -1,27 +1,56 @@
 import { generateGrid } from './visualizations/visualizations';
 
-export const generateGridOfPaths = (rows, columns) => {
+export const calculateUniquePaths = (rows, columns, obstacleCoordinates) => {
   const grid = generateGrid(rows, columns);
+  if (obstacleCoordinates) {
+    for (let key in obstacleCoordinates) {
+      addObstaclesToGrid(grid, key, obstacleCoordinates);
+    }
+  }
   for (let i = 0; i < rows; i++){
     for (let j = 0; j < columns; j++){
+      if (isAnObstacle(grid, i,j)) {
+        break;
+      }
       if (isNotAlongLeftOrTopBorder(i, j)) {
-        const theCellAbove = grid[i - 1][j];
-        const cellToTheLeft = grid[i][j - 1];
-        grid[i][j] = theCellAbove + cellToTheLeft;
+        const theCellAbove = getTheCellAbove(grid, i, j);
+        const cellToTheLeft = getCellToTheLeft(grid, i, j);
+        if (theCellAbove === 'X') {
+          updateCurrentCell(cellToTheLeft, grid, i, j);
+        } else if (cellToTheLeft === 'X') {
+          updateCurrentCell(theCellAbove, grid, i, j);
+        } else {
+          const newValue = theCellAbove + cellToTheLeft;
+          updateCurrentCell(newValue, grid, i, j);
+        }
       } else if (isAlongTheTopBorder(i, j)) {
-        const cellToTheLeft = grid[i][j - 1];
-        grid[i][j] = cellToTheLeft;
+        const cellToTheLeft = getCellToTheLeft(grid, i, j);
+        updateCurrentCell(cellToTheLeft, grid, i, j);
       } else if (isAlongTheLeftBorder(i, j)) {
-        const theCellAbove = grid[i - 1][j];
-        grid[i][j] = theCellAbove;
+        const theCellAbove = getTheCellAbove(grid, i, j);
+        updateCurrentCell(theCellAbove, grid, i, j);
       } else {
-        grid[i][j] = 1;
+        updateCurrentCell(1, grid, i, j);
       }
     }
   }
   console.table(grid);
   return grid[rows - 1][columns - 1];
 };
+
+const updateCurrentCell = (newValue, grid, i, j) => grid[i][j] = newValue;
+
+const getCellToTheLeft = (grid, i, j) => grid[i][j - 1];
+
+const getTheCellAbove = (grid, i, j) => grid[i - 1][j];
+
+const addObstaclesToGrid = (grid, key, obstacleCoordinates) => {
+  const row = obstacleCoordinates[key][0];
+  const col = obstacleCoordinates[key][1];
+  grid[row][col] = 'X';
+};
+
+const isAnObstacle = (grid, i, j) => grid[i][j] === 'X'; //
 
 const isNotAlongLeftOrTopBorder = (i, j) => j > 0 && i > 0;
 
