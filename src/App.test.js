@@ -24,11 +24,31 @@ describe('App.js', ()=>{
   });
 
   describe('uniqueGridPaths()', ()=>{
-    describe('GIVEN: length and width both equal 3, ', ()=>{
-      describe('WHEN: there are no obstacles, ', ()=>{
+    describe('WHEN: there are no obstacles, ', ()=>{
+      describe('GIVEN: length and width both equal 3, ', ()=>{
         it('THEN: It tells the number of unique paths.', ()=>{
-          const [ gridLength, gridWidth ] = [ 3, 3];
-          const expectedResult = 6;
+          const [ gridLength, gridWidth ] = [ 3, 3 ];
+          const expectedResult = 6; // derived by drawing
+
+          const result = uniqueGridPaths(gridLength, gridWidth);
+
+          expect(result).toEqual(expectedResult);
+        });
+      });
+      describe('GIVEN: length = 3, width = 6, ', ()=>{
+        it('THEN: It tells the number of unique paths.', ()=>{
+          const [ gridLength, gridWidth ] = [ 3, 6 ];
+          const expectedResult = 21; // derived by drawing
+
+          const result = uniqueGridPaths(gridLength, gridWidth);
+
+          expect(result).toEqual(expectedResult);
+        });
+      });
+      describe('GIVEN: length and width both equal 5, ', ()=>{
+        it('THEN: It tells the number of unique paths.', ()=>{
+          const [ gridLength, gridWidth ] = [ 5, 5 ];
+          const expectedResult = 70; // derived by drawing
 
           const result = uniqueGridPaths(gridLength, gridWidth);
 
