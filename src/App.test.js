@@ -9,8 +9,7 @@ describe('generateGridOfPaths()', ()=>{
 
         const result = generateGridOfPaths(gridLength, gridWidth);
 
-        // expect(result).toEqual(expectedResult);
-        expect(result).toBeDefined();
+        expect(result).toEqual(expectedResult);
       });
     });
   });

@@ -3,24 +3,22 @@ import { generateGrid } from './visualizations/visualizations';
 export const generateGridOfPaths = (rows, columns) => {
   const grid = generateGrid(rows, columns);
   for (let i = 0; i < rows; i++){
-    if (i === 0) {
-      for (let j = 0; j < columns; j++){
-        grid[i][j] = 1;
-      };
-    };
     for (let j = 0; j < columns; j++){
-      if (j === 0) {
+      if (j > 0 && i > 0) {
+        const theCellAbove = grid[i - 1][j];
+        const cellToTheLeft = grid[i][j - 1];
+        grid[i][j] = theCellAbove + cellToTheLeft;
+      } else if (j > 0 && i === 0) {
+        const cellToTheLeft = grid[i][j - 1];
+        grid[i][j] = cellToTheLeft;
+      } else if (j === 0 && i > 0) {
+        const theCellAbove = grid[i - 1][j];
+        grid[i][j] = theCellAbove;
+      } else {
         grid[i][j] = 1;
-        break;
       }
-      let cellToTheLeft = grid[i][j-1];
-      console.log(cellToTheLeft)
-      let theCellAbove = grid[i-1][j];
-      console.log(theCellAbove)
-      grid[i][j] = cellToTheLeft + theCellAbove;
     }
   }
-  console.log(grid);
   return grid[rows - 1][columns - 1];
 };
 
