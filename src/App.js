@@ -1,3 +1,7 @@
+export const uniqueGridPaths = (gridLength, gridWidth) => {
+  // implementation
+};
+
 export const generateGridWithObstacles = (gridLength, gridWidth) => {
   const grid = generateGrid(gridLength, gridWidth);
   const gridWithObstacle = addObstacleToGrid(grid);

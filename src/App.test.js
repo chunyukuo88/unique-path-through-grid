@@ -1,4 +1,4 @@
-import { generateGridWithObstacles } from './App';
+import { uniqueGridPaths, generateGridWithObstacles } from './App';
 
 describe('App.js', ()=>{
   describe('generateGridWithObstacles()', ()=>{
@@ -19,6 +19,21 @@ describe('App.js', ()=>{
         const resultHasAnObstacleInIt = flattenedGrid.includes(1);
 
         expect(resultHasAnObstacleInIt).toEqual(true);
+      });
+    });
+  });
+
+  describe('uniqueGridPaths()', ()=>{
+    describe('GIVEN: length and width both equal 3, ', ()=>{
+      describe('WHEN: there are no obstacles, ', ()=>{
+        it('THEN: It tells the number of unique paths.', ()=>{
+          const [ gridLength, gridWidth ] = [ 3, 3];
+          const expectedResult = 6;
+
+          const result = uniqueGridPaths(gridLength, gridWidth);
+
+          expect(result).toEqual(expectedResult);
+        });
       });
     });
   });
