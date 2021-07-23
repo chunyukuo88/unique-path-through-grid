@@ -2,17 +2,25 @@ export const uniqueGridPaths = (gridLength, gridWidth) => {
   const grid = generateGrid(gridLength, gridWidth);
   for (let i = 0; i < gridLength; i++) {
     for (let j = 0; j < gridWidth; j++) {
-      if (i === 0 || j === 0) {
-        grid[i][j] = 1;
-      } else {
-        const slotAbove = grid[i-1][j];
-        const slotToTheLeft = grid[i][j-1];
-        grid[i][j] = slotAbove + slotToTheLeft;
-      }
+      populateGrid(i, j, grid);
     }
   }
-  const uniquePathsToEnd = grid[gridLength - 1][gridWidth -1];
+  const uniquePathsToEnd = grid[gridLength - 1][gridWidth - 1];
   return uniquePathsToEnd;
+};
+
+const populateGrid = (i, j, grid) => {
+  if (atLeftOrTopBoundary(i, j)) {
+    grid[i][j] = 1;
+  } else {
+    const slotAbove = grid[i-1][j];
+    const slotToTheLeft = grid[i][j-1];
+    grid[i][j] = slotAbove + slotToTheLeft;
+  }
+};
+
+const atLeftOrTopBoundary = (i, j) => {
+  return (i === 0 || j === 0);
 };
 
 export const generateGridWithObstacles = (gridLength, gridWidth) => {
