@@ -11,36 +11,31 @@ export const calculateUniquePaths = (rows, columns, obstacleCoordinates) => {
   const grid = generateGrid(rows, columns, obstacleCoordinates);
   const [firstCell, lastCell] = [grid[0][0], grid[rows-1][columns-1]];
   if (entranceOrExitIsObstacle(firstCell, lastCell)) return 0;
+
   for (let i = 0; i < rows; i++){
     for (let j = 0; j < columns; j++){
       if (isAnObstacle(grid, i,j)) break;
       if (isNotAlongLeftOrTopBorder(i, j)) {
         const theCellAbove = getTheCellAbove(grid, i, j);
         const cellToTheLeft = getCellToTheLeft(grid, i, j);
-        if (isNaN(cellToTheLeft) && theCellAbove) {
+        if (isNaN(cellToTheLeft)) {
           updateCurrentCell(theCellAbove, grid, i, j);
-          break;
-        }
-        if (isNaN(cellToTheLeft) && !theCellAbove) {
-          updateCurrentCell(0, grid, i, j);
-          break;
-        }
-        if (isNaN(theCellAbove) && cellToTheLeft) {
+        } else if (isNaN(theCellAbove)) {
           updateCurrentCell(cellToTheLeft, grid, i, j);
-          break;
+        } else {
+          const newValue = theCellAbove + cellToTheLeft;
+          updateCurrentCell(newValue, grid, i, j);
         }
-        if (isNaN(theCellAbove) && !cellToTheLeft) {
-          updateCurrentCell(0, grid, i, j);
-          break;
-        }
-        const newValue = theCellAbove + cellToTheLeft;
-        updateCurrentCell(newValue, grid, i, j);
-      } else if (isAlongTheTopBorder(i, j)) {
+      } else if (isAlongTheTopRow(i, j)) {
         const cellToTheLeft = getCellToTheLeft(grid, i, j);
         updateCurrentCell(cellToTheLeft, grid, i, j);
-      } else if (isAlongTheLeftBorder(i, j)) {
+      } else if (isAlongTheLeftColumn(i, j)) {
         const theCellAbove = getTheCellAbove(grid, i, j);
-        updateCurrentCell(theCellAbove, grid, i, j);
+        if (isNaN(theCellAbove)) {
+          updateCurrentCell(0, grid, i, j);
+        } else {
+          updateCurrentCell(theCellAbove, grid, i, j);
+        }
       } else {
         updateCurrentCell(1, grid, i, j);
       }
@@ -84,9 +79,9 @@ const isAnObstacle = (grid, i, j) => grid[i][j] === 'X';
 
 const isNotAlongLeftOrTopBorder = (i, j) => (j > 0 && i > 0);
 
-const isAlongTheTopBorder = (i, j) => (j > 0 && i === 0);
+const isAlongTheTopRow = (i, j) => (j > 0 && i === 0);
 
-const isAlongTheLeftBorder = (i, j) => (j === 0 && i > 0);
+const isAlongTheLeftColumn = (i, j) => (j === 0 && i > 0);
 
 
 /**
