@@ -9,20 +9,20 @@ export const calculateUniquePaths = (rows, columns, obstacleCoordinates) => {
   }
   for (let i = 0; i < rows; i++){
     for (let j = 0; j < columns; j++){
-      if (isAnObstacle(grid, i,j)) {
-        break;
-      }
+      if (isAnObstacle(grid, i,j)) break;
       if (isNotAlongLeftOrTopBorder(i, j)) {
         const theCellAbove = getTheCellAbove(grid, i, j);
         const cellToTheLeft = getCellToTheLeft(grid, i, j);
-        if (theCellAbove === 'X') {
-          updateCurrentCell(cellToTheLeft, grid, i, j);
-        } else if (cellToTheLeft === 'X') {
+        if (isNaN(cellToTheLeft) && theCellAbove) {
           updateCurrentCell(theCellAbove, grid, i, j);
-        } else {
-          const newValue = theCellAbove + cellToTheLeft;
-          updateCurrentCell(newValue, grid, i, j);
+          break;
         }
+        if (isNaN(theCellAbove) && cellToTheLeft) {
+          updateCurrentCell(cellToTheLeft, grid, i, j);
+          break;
+        }
+        const newValue = theCellAbove + cellToTheLeft;
+        updateCurrentCell(newValue, grid, i, j);
       } else if (isAlongTheTopBorder(i, j)) {
         const cellToTheLeft = getCellToTheLeft(grid, i, j);
         updateCurrentCell(cellToTheLeft, grid, i, j);
@@ -38,6 +38,13 @@ export const calculateUniquePaths = (rows, columns, obstacleCoordinates) => {
   return grid[rows - 1][columns - 1];
 };
 
+
+const displayCellInfo = (grid, i, j) => {
+  console.log(
+    `Current cell: ${grid[i][j]}\nLeft: ${grid[i][j - 1]}\nAbove: ${grid[i-1][j]}`
+  );
+}
+
 const updateCurrentCell = (newValue, grid, i, j) => grid[i][j] = newValue;
 
 const getCellToTheLeft = (grid, i, j) => grid[i][j - 1];
@@ -50,13 +57,13 @@ const addObstaclesToGrid = (grid, key, obstacleCoordinates) => {
   grid[row][col] = 'X';
 };
 
-const isAnObstacle = (grid, i, j) => grid[i][j] === 'X'; //
+const isAnObstacle = (grid, i, j) => grid[i][j] === 'X';
 
-const isNotAlongLeftOrTopBorder = (i, j) => j > 0 && i > 0;
+const isNotAlongLeftOrTopBorder = (i, j) => (j > 0 && i > 0);
 
-const isAlongTheTopBorder = (i, j) => j > 0 && i === 0;
+const isAlongTheTopBorder = (i, j) => (j > 0 && i === 0);
 
-const isAlongTheLeftBorder = (i, j) => j === 0 && i > 0;
+const isAlongTheLeftBorder = (i, j) => (j === 0 && i > 0);
 
 
 /**

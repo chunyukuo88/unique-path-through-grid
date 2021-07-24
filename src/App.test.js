@@ -19,7 +19,7 @@ describe('generateGridOfPaths()', ()=>{
         const [ gridLength, gridWidth ] = [ 6, 6 ];
         const expectedResult = 1;
         const obstacleCoordinates = {
-          1: [2,2],
+          // 1: [2,0],
           2: [3,2]
         };
 
