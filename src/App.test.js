@@ -3,9 +3,39 @@ import { calculateUniquePaths } from './App';
 describe('generateGridOfPaths()', ()=>{
   describe('WHEN: there are no obstacles, ', ()=>{
     describe('GIVEN: length and width both equal 4, ', ()=>{
-      it('THEN: It tells the number of unique paths.', ()=>{
+      it('THEN: It tells the number of unique paths (20).', ()=>{
         const [ gridLength, gridWidth ] = [ 4, 4 ];
         const expectedResult = 20;
+
+        const result = calculateUniquePaths(gridLength, gridWidth);
+
+        expect(result).toEqual(expectedResult);
+      });
+    });
+    describe('GIVEN: there is only one cell, ', ()=>{
+      it('THEN: it returns 1.', ()=>{
+        const [ gridLength, gridWidth ] = [ 1, 1 ];
+        const expectedResult = 1;
+
+        const result = calculateUniquePaths(gridLength, gridWidth);
+
+        expect(result).toEqual(expectedResult);
+      });
+    });
+    describe('GIVEN: length = 1, width = 1_000, ', ()=>{
+      it('THEN: It tells the number of unique paths (1).', ()=>{
+        const [ gridLength, gridWidth ] = [ 1, 1_000 ];
+        const expectedResult = 1;
+
+        const result = calculateUniquePaths(gridLength, gridWidth);
+
+        expect(result).toEqual(expectedResult);
+      });
+    });
+    describe('GIVEN: length = 3, width = 12, ', ()=>{
+      it('THEN: It tells the number of unique paths (78).', ()=>{
+        const [ gridLength, gridWidth ] = [ 3, 12 ];
+        const expectedResult = 78;
 
         const result = calculateUniquePaths(gridLength, gridWidth);
 
@@ -18,16 +48,14 @@ describe('generateGridOfPaths()', ()=>{
       it('THEN: It returns 0, meaning there are no paths', ()=>{
         const [ gridLength, gridWidth ] = [ 6, 6 ];
         const expectedResult = 0;
-        const obstacleCoordinates = {
-          1: [0,0],
-        };
+        const obstacleCoordinates = { 1: [0,0] };
 
         const result = calculateUniquePaths(gridLength, gridWidth, obstacleCoordinates);
 
         expect(result).toEqual(expectedResult);
       });
     });
-    describe('GIVEN: similar to the previous, when the last cell is an obstacle, ', ()=>{
+    describe('GIVEN: the last cell is an obstacle, ', ()=>{
       it('THEN: It returns 0, meaning there are no paths', ()=>{
         const [ gridLength, gridWidth ] = [ 6, 6 ];
         const expectedResult = 0;
@@ -40,8 +68,8 @@ describe('generateGridOfPaths()', ()=>{
         expect(result).toEqual(expectedResult);
       });
     });
-    describe('GIVEN: length and width both equal 6, ', ()=>{
-      it('THEN: It tells the number of unique paths.', ()=>{
+    describe('GIVEN: There is ostensibly only one path, ', ()=>{
+      it('THEN: It returns 1.', ()=>{
         const [ gridLength, gridWidth ] = [ 6, 6 ];
         const expectedResult = 1;
         const obstacleCoordinates = {
@@ -50,13 +78,39 @@ describe('generateGridOfPaths()', ()=>{
           3: [3,4],
           4: [4,4],
           5: [5,4],
-          // 6: [0,4]
         };
 
         const result = calculateUniquePaths(gridLength, gridWidth, obstacleCoordinates);
 
-        // expect(result).toEqual(expectedResult); // the actual assertion I am working towards.
-        expect(result).toBeDefined();  // to get the test to run and log the grid.
+        expect(result).toEqual(expectedResult);
+      });
+    });
+    describe('GIVEN: There are ostensibly two paths, ', ()=>{
+      it('THEN: It returns 2.', ()=>{
+        const [ gridLength, gridWidth ] = [ 6, 6 ];
+        const expectedResult = 2;
+        const obstacleCoordinates = {
+          1: [1,3],
+          2: [2,4],
+          3: [3,4],
+          4: [4,4],
+          5: [5,4],
+        };
+
+        const result = calculateUniquePaths(gridLength, gridWidth, obstacleCoordinates);
+
+        expect(result).toEqual(expectedResult);
+      });
+    });
+    describe('GIVEN: There is one obstacle in the lower-left corner, ', ()=>{
+      it('THEN: It returns a number equal to (the number of unique paths with no obstacles) minus 1.', ()=>{
+        const [ gridLength, gridWidth ] = [ 6, 6 ];
+        const expectedResult = calculateUniquePaths(gridLength, gridWidth) - 1;
+        const obstacleCoordinates = { 1: [5,0] };
+
+        const result = calculateUniquePaths(gridLength, gridWidth, obstacleCoordinates);
+
+        expect(result).toEqual(expectedResult);
       });
     });
   });

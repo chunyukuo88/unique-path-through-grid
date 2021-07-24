@@ -1,33 +1,28 @@
 import { generateGridOfZeroes } from './visualizations/visualizations';
-import { _ } from 'lodash';
 /**
- * The optional `obstacleCoordinates` parameter is not required to solve the
- * problem alone, but it is required for unit testing. Having it also has the
- * benefit of allowing the user to calculate unique paths when there are no
- * obstacles present (i.e. no value is given).
- * */
+ The optional `obstacleCoordinates` parameter is not required to solve the
+ kata alone, but it is required for unit testing. Having it also has the
+ benefit of allowing the user to calculate unique paths when there are no
+ obstacles present (i.e. no `obstacleCoordinates` value is passed in).
+ **/
 
 export const calculateUniquePaths = (rows, columns, obstacleCoordinates) => {
   const grid = generateGrid(rows, columns, obstacleCoordinates);
-  const resultGrid = _.cloneDeep(grid);
-  const [firstCell, lastCell] = [grid[0][0], grid[rows-1][columns-1]];
+  const { firstCell, lastCell } = getFirstAndLastCells(grid, rows, columns,);
   if (entranceOrExitIsObstacle(firstCell, lastCell)) return 0;
 
   for (let i = 0; i < rows; i++){
     for (let j = 0; j < columns; j++){
-      if (isAnObstacle(grid, i,j)) {
-        updateCurrentCell('X', grid, i, j);
-      }
+      if (isAnObstacle(grid, i,j)) updateCurrentCell('X', grid, i, j);
       else if (isNotAlongLeftOrTopBorder(i, j)) {
-        const cellToTheLeft = getCellToTheLeft(grid, i, j);
-        const theCellAbove = getTheCellAbove(grid, i, j);
+        const [cellToTheLeft, theCellAbove] = [getCellToTheLeft(grid, i, j), getTheCellAbove(grid, i, j)];
         if (!isNaN(cellToTheLeft) && !isNaN(theCellAbove)) {
-          const newValue = theCellAbove + cellToTheLeft;
-          updateCurrentCell(newValue, grid, i, j);
+          const uniquePathsToThisCell = theCellAbove + cellToTheLeft;
+          updateCurrentCell(uniquePathsToThisCell, grid, i, j);
         }
         else if (isNaN(cellToTheLeft)) {
           updateCurrentCell(theCellAbove, grid, i, j);
-        } else { // if (isNaN(theCellAbove))
+        } else { // i.e., if (isNaN(theCellAbove))
           updateCurrentCell(cellToTheLeft, grid, i, j);
         }
       } else if (isAlongTheTopRow(i, j)) {
@@ -60,13 +55,14 @@ const generateGrid = (rows, columns, obstacleCoordinates) => {
   return grid;
 };
 
-const entranceOrExitIsObstacle = (firstCell, lastCell) => (isNaN(firstCell) || isNaN(lastCell));
-
-const displayCellInfo = (grid, i, j) => {
-  console.log(
-    `Current cell: ${grid[i][j]}\nLeft: ${grid[i][j - 1]}\nAbove: ${grid[i-1][j]}`
-  );
+const getFirstAndLastCells = (grid, i, j) => {
+  return {
+    firstCell: grid[0][0],
+    lastCell: grid[i - 1][j - 1]
+  };
 }
+
+const entranceOrExitIsObstacle = (firstCell, lastCell) => (isNaN(firstCell) || isNaN(lastCell));
 
 const updateCurrentCell = (newValue, grid, i, j) => grid[i][j] = newValue;
 
@@ -88,12 +84,3 @@ const isAlongTheTopRow = (i, j) => (j > 0 && i === 0);
 
 const isAlongTheLeftColumn = (i, j) => (j === 0 && i > 0);
 
-
-/**
- [
-  [  1,  1,  1,  1  ],
-  [  1,  2,  3,  4  ],
-  [  1,  3,  6,  10 ],
-  [  1,  4,  10, 20 ]
- ]
- * */
