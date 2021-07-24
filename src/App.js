@@ -83,4 +83,3 @@ const isNotAlongLeftOrTopBorder = (i, j) => (j > 0 && i > 0);
 const isAlongTheTopRow = (i, j) => (j > 0 && i === 0);
 
 const isAlongTheLeftColumn = (i, j) => (j === 0 && i > 0);
-

@@ -103,5 +103,22 @@ describe('generateGridOfPaths()', ()=>{
         expect(numberOfUniquePaths).toEqual(expectedResult);
       });
     });
+    describe('GIVEN: There are many random obstacles across the grid, ', ()=>{
+      it('THEN: It returns the number of unique paths (43).', ()=>{
+        const [ gridLength, gridWidth ] = [ 6, 6 ];
+        const obstacleCoordinates = {
+          1: [5,0],
+          2: [2,3],
+          3: [4,1],
+          4: [0,3],
+          5: [2,0],
+          6: [3,3]
+        };
+
+        const numberOfUniquePaths = calculateUniquePaths(gridLength, gridWidth, obstacleCoordinates);
+
+        expect(numberOfUniquePaths).toEqual(43);
+      });
+    });
   });
 });
