@@ -1,5 +1,5 @@
 import { generateGridOfZeroes } from './visualizations/visualizations';
-
+import { _ } from 'lodash';
 /**
  * The optional `obstacleCoordinates` parameter is not required to solve the
  * problem alone, but it is required for unit testing. Having it also has the
@@ -9,6 +9,7 @@ import { generateGridOfZeroes } from './visualizations/visualizations';
 
 export const calculateUniquePaths = (rows, columns, obstacleCoordinates) => {
   const grid = generateGrid(rows, columns, obstacleCoordinates);
+  const resultGrid = _.cloneDeep(grid);
   const [firstCell, lastCell] = [grid[0][0], grid[rows-1][columns-1]];
   if (entranceOrExitIsObstacle(firstCell, lastCell)) return 0;
 
@@ -16,15 +17,15 @@ export const calculateUniquePaths = (rows, columns, obstacleCoordinates) => {
     for (let j = 0; j < columns; j++){
       if (isAnObstacle(grid, i,j)) break;
       if (isNotAlongLeftOrTopBorder(i, j)) {
-        const theCellAbove = getTheCellAbove(grid, i, j);
         const cellToTheLeft = getCellToTheLeft(grid, i, j);
-        if (isNaN(cellToTheLeft)) {
-          updateCurrentCell(theCellAbove, grid, i, j);
-        } else if (isNaN(theCellAbove)) {
-          updateCurrentCell(cellToTheLeft, grid, i, j);
-        } else {
+        const theCellAbove = getTheCellAbove(grid, i, j);
+        if (!isNaN(cellToTheLeft) && !isNaN(theCellAbove)) {
           const newValue = theCellAbove + cellToTheLeft;
           updateCurrentCell(newValue, grid, i, j);
+        } else if (isNaN(cellToTheLeft)) {
+          updateCurrentCell(theCellAbove, grid, i, j);
+        } else { // if (isNaN(theCellAbove))
+          updateCurrentCell(cellToTheLeft, grid, i, j);
         }
       } else if (isAlongTheTopRow(i, j)) {
         const cellToTheLeft = getCellToTheLeft(grid, i, j);
@@ -36,7 +37,8 @@ export const calculateUniquePaths = (rows, columns, obstacleCoordinates) => {
         } else {
           updateCurrentCell(theCellAbove, grid, i, j);
         }
-      } else {
+      }
+      else {
         updateCurrentCell(1, grid, i, j);
       }
     }

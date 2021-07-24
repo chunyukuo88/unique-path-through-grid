@@ -51,8 +51,8 @@ describe('generateGridOfPaths()', ()=>{
 
         const result = calculateUniquePaths(gridLength, gridWidth, obstacleCoordinates);
 
-        // expect(result).toEqual(expectedResult);
-        expect(result).toBeDefined();
+        // expect(result).toEqual(expectedResult); // the actual assertion I am working towards.
+        expect(result).toBeDefined();  // to get the test to run and log the grid.
       });
     });
   });
