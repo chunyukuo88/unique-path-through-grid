@@ -27,7 +27,7 @@ describe('generateGridOfPaths()', ()=>{
         expect(result).toEqual(expectedResult);
       });
     });
-    describe('GIVEN: the last cell is an obstacle, ', ()=>{
+    describe('GIVEN: similar to the previous, when the last cell is an obstacle, ', ()=>{
       it('THEN: It returns 0, meaning there are no paths', ()=>{
         const [ gridLength, gridWidth ] = [ 6, 6 ];
         const expectedResult = 0;

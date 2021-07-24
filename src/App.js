@@ -1,16 +1,16 @@
-import { generateGrid } from './visualizations/visualizations';
+import { generateGridOfZeroes } from './visualizations/visualizations';
+
+/**
+ * The optional `obstacleCoordinates` parameter is not required to solve the
+ * problem alone, but it is required for unit testing. Having it also has the
+ * benefit of allowing the user to calculate unique paths when there are no
+ * obstacles present (i.e. no value is given).
+ * */
 
 export const calculateUniquePaths = (rows, columns, obstacleCoordinates) => {
-  const grid = generateGrid(rows, columns);
-  if (obstacleCoordinates) {
-    for (let key in obstacleCoordinates) {
-      addObstaclesToGrid(grid, key, obstacleCoordinates);
-    }
-  }
-  const firstCell = grid[0][0];
-  const lastCell = grid[rows-1][columns-1];
-  if (isNaN(firstCell) || isNaN(lastCell)) return 0;
-
+  const grid = generateGrid(rows, columns, obstacleCoordinates);
+  const [firstCell, lastCell] = [grid[0][0], grid[rows-1][columns-1]];
+  if (entranceOrExitIsObstacle(firstCell, lastCell)) return 0;
   for (let i = 0; i < rows; i++){
     for (let j = 0; j < columns; j++){
       if (isAnObstacle(grid, i,j)) break;
@@ -50,6 +50,17 @@ export const calculateUniquePaths = (rows, columns, obstacleCoordinates) => {
   return grid[rows - 1][columns - 1];
 };
 
+const generateGrid = (rows, columns, obstacleCoordinates) => {
+  const grid = generateGridOfZeroes(rows, columns);
+  if (obstacleCoordinates) {
+    for (let key in obstacleCoordinates) {
+      addObstaclesToGrid(grid, key, obstacleCoordinates);
+    }
+  }
+  return grid;
+};
+
+const entranceOrExitIsObstacle = (firstCell, lastCell) => (isNaN(firstCell) || isNaN(lastCell));
 
 const displayCellInfo = (grid, i, j) => {
   console.log(

@@ -20,7 +20,7 @@ const getPathsIfObstaclesPresent = (gridLength, gridWidth) => {
 };
 
 const getPathsIfNoObstacles = (gridLength, gridWidth) => {
-  const grid = generateGrid(gridLength, gridWidth);
+  const grid = generateGridOfZeroes(gridLength, gridWidth);
   for (let i = 0; i < gridLength; i++) {
     for (let j = 0; j < gridWidth; j++) {
       populateGrid(i, j, grid);
@@ -45,12 +45,12 @@ const atLeftOrTopBoundary = (i, j) => {
 };
 
 export const generateGridWithObstacle = (gridLength, gridWidth) => {
-  const grid = generateGrid(gridLength, gridWidth);
+  const grid = generateGridOfZeroes(gridLength, gridWidth);
   const gridWithObstacle = addObstacleToGrid(grid);
   return gridWithObstacle;
 };
 
-const generateGrid = (gridLength, gridWidth) => {
+const generateGridOfZeroes = (gridLength, gridWidth) => {
   const result = [];
   for (let i = 0; i < gridLength; i++){
     generateInnerArrays(result, gridWidth);
@@ -75,4 +75,4 @@ const addObstacleToGrid = (grid) => {
 
 const produceCoordinate = (grid) => Math.floor(Math.random() * grid.length);
 
-export { generateGrid };
+export { generateGridOfZeroes };
