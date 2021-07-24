@@ -14,12 +14,38 @@ describe('generateGridOfPaths()', ()=>{
     });
   });
   describe('WHEN: there ARE obstacles, ', ()=>{
+    describe('GIVEN: the first cell is an obstacle, ', ()=>{
+      it('THEN: It returns 0, meaning there are no paths', ()=>{
+        const [ gridLength, gridWidth ] = [ 6, 6 ];
+        const expectedResult = 0;
+        const obstacleCoordinates = {
+          1: [0,0],
+        };
+
+        const result = calculateUniquePaths(gridLength, gridWidth, obstacleCoordinates);
+
+        expect(result).toEqual(expectedResult);
+      });
+    });
+    describe('GIVEN: the last cell is an obstacle, ', ()=>{
+      it('THEN: It returns 0, meaning there are no paths', ()=>{
+        const [ gridLength, gridWidth ] = [ 6, 6 ];
+        const expectedResult = 0;
+        const obstacleCoordinates = {
+          1: [5,5],
+        };
+
+        const result = calculateUniquePaths(gridLength, gridWidth, obstacleCoordinates);
+
+        expect(result).toEqual(expectedResult);
+      });
+    });
     describe('GIVEN: length and width both equal 6, ', ()=>{
       it('THEN: It tells the number of unique paths.', ()=>{
         const [ gridLength, gridWidth ] = [ 6, 6 ];
         const expectedResult = 1;
         const obstacleCoordinates = {
-          // 1: [2,0],
+          1: [2,0],
           2: [3,2]
         };
 

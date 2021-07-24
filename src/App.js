@@ -7,6 +7,10 @@ export const calculateUniquePaths = (rows, columns, obstacleCoordinates) => {
       addObstaclesToGrid(grid, key, obstacleCoordinates);
     }
   }
+  const firstCell = grid[0][0];
+  const lastCell = grid[rows-1][columns-1];
+  if (isNaN(firstCell) || isNaN(lastCell)) return 0;
+
   for (let i = 0; i < rows; i++){
     for (let j = 0; j < columns; j++){
       if (isAnObstacle(grid, i,j)) break;
@@ -17,8 +21,16 @@ export const calculateUniquePaths = (rows, columns, obstacleCoordinates) => {
           updateCurrentCell(theCellAbove, grid, i, j);
           break;
         }
+        if (isNaN(cellToTheLeft) && !theCellAbove) {
+          updateCurrentCell(0, grid, i, j);
+          break;
+        }
         if (isNaN(theCellAbove) && cellToTheLeft) {
           updateCurrentCell(cellToTheLeft, grid, i, j);
+          break;
+        }
+        if (isNaN(theCellAbove) && !cellToTheLeft) {
+          updateCurrentCell(0, grid, i, j);
           break;
         }
         const newValue = theCellAbove + cellToTheLeft;
