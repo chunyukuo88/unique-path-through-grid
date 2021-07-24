@@ -5,41 +5,37 @@ describe('generateGridOfPaths()', ()=>{
     describe('GIVEN: length and width both equal 4, ', ()=>{
       it('THEN: It tells the number of unique paths (20).', ()=>{
         const [ gridLength, gridWidth ] = [ 4, 4 ];
-        const expectedResult = 20;
 
-        const result = calculateUniquePaths(gridLength, gridWidth);
+        const numberOfUniquePaths = calculateUniquePaths(gridLength, gridWidth);
 
-        expect(result).toEqual(expectedResult);
+        expect(numberOfUniquePaths).toEqual(20);
       });
     });
     describe('GIVEN: there is only one cell, ', ()=>{
       it('THEN: it returns 1.', ()=>{
         const [ gridLength, gridWidth ] = [ 1, 1 ];
-        const expectedResult = 1;
 
-        const result = calculateUniquePaths(gridLength, gridWidth);
+        const numberOfUniquePaths = calculateUniquePaths(gridLength, gridWidth);
 
-        expect(result).toEqual(expectedResult);
+        expect(numberOfUniquePaths).toEqual(1);
       });
     });
     describe('GIVEN: length = 1, width = 1_000, ', ()=>{
       it('THEN: It tells the number of unique paths (1).', ()=>{
         const [ gridLength, gridWidth ] = [ 1, 1_000 ];
-        const expectedResult = 1;
 
-        const result = calculateUniquePaths(gridLength, gridWidth);
+        const numberOfUniquePaths = calculateUniquePaths(gridLength, gridWidth);
 
-        expect(result).toEqual(expectedResult);
+        expect(numberOfUniquePaths).toEqual(1);
       });
     });
     describe('GIVEN: length = 3, width = 12, ', ()=>{
       it('THEN: It tells the number of unique paths (78).', ()=>{
         const [ gridLength, gridWidth ] = [ 3, 12 ];
-        const expectedResult = 78;
 
-        const result = calculateUniquePaths(gridLength, gridWidth);
+        const numberOfUniquePaths = calculateUniquePaths(gridLength, gridWidth);
 
-        expect(result).toEqual(expectedResult);
+        expect(numberOfUniquePaths).toEqual(78);
       });
     });
   });
@@ -47,31 +43,26 @@ describe('generateGridOfPaths()', ()=>{
     describe('GIVEN: the first cell is an obstacle, ', ()=>{
       it('THEN: It returns 0, meaning there are no paths', ()=>{
         const [ gridLength, gridWidth ] = [ 6, 6 ];
-        const expectedResult = 0;
         const obstacleCoordinates = { 1: [0,0] };
 
-        const result = calculateUniquePaths(gridLength, gridWidth, obstacleCoordinates);
+        const numberOfUniquePaths = calculateUniquePaths(gridLength, gridWidth, obstacleCoordinates);
 
-        expect(result).toEqual(expectedResult);
+        expect(numberOfUniquePaths).toEqual(0);
       });
     });
     describe('GIVEN: the last cell is an obstacle, ', ()=>{
       it('THEN: It returns 0, meaning there are no paths', ()=>{
         const [ gridLength, gridWidth ] = [ 6, 6 ];
-        const expectedResult = 0;
-        const obstacleCoordinates = {
-          1: [5,5],
-        };
+        const obstacleCoordinates = { 1: [5,5] };
 
-        const result = calculateUniquePaths(gridLength, gridWidth, obstacleCoordinates);
+        const numberOfUniquePaths = calculateUniquePaths(gridLength, gridWidth, obstacleCoordinates);
 
-        expect(result).toEqual(expectedResult);
+        expect(numberOfUniquePaths).toEqual(0);
       });
     });
     describe('GIVEN: There is ostensibly only one path, ', ()=>{
       it('THEN: It returns 1.', ()=>{
         const [ gridLength, gridWidth ] = [ 6, 6 ];
-        const expectedResult = 1;
         const obstacleCoordinates = {
           1: [1,4],
           2: [2,4],
@@ -80,15 +71,14 @@ describe('generateGridOfPaths()', ()=>{
           5: [5,4],
         };
 
-        const result = calculateUniquePaths(gridLength, gridWidth, obstacleCoordinates);
+        const numberOfUniquePaths = calculateUniquePaths(gridLength, gridWidth, obstacleCoordinates);
 
-        expect(result).toEqual(expectedResult);
+        expect(numberOfUniquePaths).toEqual(1);
       });
     });
     describe('GIVEN: There are ostensibly two paths, ', ()=>{
       it('THEN: It returns 2.', ()=>{
         const [ gridLength, gridWidth ] = [ 6, 6 ];
-        const expectedResult = 2;
         const obstacleCoordinates = {
           1: [1,3],
           2: [2,4],
@@ -97,9 +87,9 @@ describe('generateGridOfPaths()', ()=>{
           5: [5,4],
         };
 
-        const result = calculateUniquePaths(gridLength, gridWidth, obstacleCoordinates);
+        const numberOfUniquePaths = calculateUniquePaths(gridLength, gridWidth, obstacleCoordinates);
 
-        expect(result).toEqual(expectedResult);
+        expect(numberOfUniquePaths).toEqual(2);
       });
     });
     describe('GIVEN: There is one obstacle in the lower-left corner, ', ()=>{
@@ -108,9 +98,9 @@ describe('generateGridOfPaths()', ()=>{
         const expectedResult = calculateUniquePaths(gridLength, gridWidth) - 1;
         const obstacleCoordinates = { 1: [5,0] };
 
-        const result = calculateUniquePaths(gridLength, gridWidth, obstacleCoordinates);
+        const numberOfUniquePaths = calculateUniquePaths(gridLength, gridWidth, obstacleCoordinates);
 
-        expect(result).toEqual(expectedResult);
+        expect(numberOfUniquePaths).toEqual(expectedResult);
       });
     });
   });
