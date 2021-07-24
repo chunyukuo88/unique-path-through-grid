@@ -15,14 +15,17 @@ export const calculateUniquePaths = (rows, columns, obstacleCoordinates) => {
 
   for (let i = 0; i < rows; i++){
     for (let j = 0; j < columns; j++){
-      if (isAnObstacle(grid, i,j)) break;
-      if (isNotAlongLeftOrTopBorder(i, j)) {
+      if (isAnObstacle(grid, i,j)) {
+        updateCurrentCell('X', grid, i, j);
+      }
+      else if (isNotAlongLeftOrTopBorder(i, j)) {
         const cellToTheLeft = getCellToTheLeft(grid, i, j);
         const theCellAbove = getTheCellAbove(grid, i, j);
         if (!isNaN(cellToTheLeft) && !isNaN(theCellAbove)) {
           const newValue = theCellAbove + cellToTheLeft;
           updateCurrentCell(newValue, grid, i, j);
-        } else if (isNaN(cellToTheLeft)) {
+        }
+        else if (isNaN(cellToTheLeft)) {
           updateCurrentCell(theCellAbove, grid, i, j);
         } else { // if (isNaN(theCellAbove))
           updateCurrentCell(cellToTheLeft, grid, i, j);
