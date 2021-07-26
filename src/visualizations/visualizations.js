@@ -67,12 +67,12 @@ const generateInnerArrays = (outerArray, outerArrayWidth) => {
 };
 
 const addObstacleToGrid = (grid) => {
-  const x = produceCoordinate(grid);
-  const y= produceCoordinate(grid);
+  const x = produceRandomCoordinate(grid);
+  const y= produceRandomCoordinate(grid);
   grid[x][y] = 1;
   return grid;
 };
 
-const produceCoordinate = (grid) => Math.floor(Math.random() * grid.length);
+const produceRandomCoordinate = (grid) => Math.floor(Math.random() * grid.length);
 
 export { generateGridOfZeroes };
